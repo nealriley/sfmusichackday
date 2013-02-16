@@ -23,7 +23,6 @@ client.on('connect', function(connection) {
     if (message.type === 'utf8') {
       var json = JSON.parse(message.utf8Data);
       console.dir(json);
-      }
     }
   });
 });
