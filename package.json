@@ -11,6 +11,7 @@
     "express": "3.x",
     "underscore": "~ 1.2.2",
     "stitch": "~0.3.3",
+    "websocket": "",
     "osc-min": "~0.0.8"
   }
 }
