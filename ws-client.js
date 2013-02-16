@@ -22,14 +22,22 @@ client.on('connect', function(connection) {
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
       var json = JSON.parse(message.utf8Data);
-      console.dir(json);
+      // console.dir(json);
+
+      if (json["hands"]) {
+        var arg  = "Hello?";
+        var hand = null;
+        if (hand = json.hands[0]) {
+          sendOSCMessage("/hand/" + hand["id"], arg); 
+        }
+      }
     }
   });
 });
 
 var sendOSCMessage = function (address, arg) {
   var buf = osc.toBuffer({
-    address: "/" + address,
+    address: address,
     args: [arg]
   });
 
