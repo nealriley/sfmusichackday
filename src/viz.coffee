@@ -55,10 +55,6 @@ window.onResize = ->
   width  = ctx.canvas.width  = window.innerWidth
   height = ctx.canvas.height = window.innerHeight
 
-h1 = 1
-h2 = 285
-dir = 1
-
 class Viz
   constructor: ->
     @finger = new Finger(ctx, 0)
@@ -67,29 +63,17 @@ class Viz
     @frameId = root.requestAnimationFrame(@run)
 
     try 
-      window.oscData = translator(JSON.parse(window.data))
+      oscData = translator(JSON.parse(window.data))
     catch e
       return
 
-    #@finger.draw(ctx, thing) if thing = window.oscData[0]
-
-    drawItem = (positionArray) -> 
-      xposition = positionArray['value'][0]*2
-      yposition = (-positionArray['value'][1]+300)*2
-      ctx.save()
-      #ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
-      ctx.fillStyle = "hsl(#{h1}, 50%, 80%)"
-      ctx.fillRect(xposition, yposition, 50, 50)
-
-    #drawItem(item) for item in window.oscData
-    @finger.draw(ctx, item) for item in window.oscData
-
-    h1 = h1 + dir
-    h2 = h2 - dir
-
-    if (h1 > 284 || h1 < 1) then dir = -1 * dir
+    items = @filter(oscData)
+    @finger.draw(ctx, item) for item in items
 
     return  
+
+  filter: (results) ->
+    item for item in results when item['address'].match(/finger/i) and item['address'].match(/val/i)
 
 module.exports = Viz
 
