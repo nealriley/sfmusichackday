@@ -44,29 +44,42 @@ perf.now  ||=
 canvas = $("#canvas")[0]
 console.dir canvas
 ctx = canvas.getContext("2d")
+ctx.canvas.width  = window.innerWidth
+ctx.canvas.height = window.innerHeight
 
-red = 0
-green = 0
-blue  = 0
+window.onResize = ->
+  ctx.canvas.width  = window.innerWidth
+  ctx.canvas.height = window.innerHeight
+
+h1 = 1
+h2 = 285
+dir = 1
 
 class Viz
   run: (time = perf.now()) =>
     @frameId = root.requestAnimationFrame(@run)
 
-    window.oscData = translator(JSON.parse(window.data))
+    try 
+      window.oscData = translator(JSON.parse(window.data))
+    catch e
+      return
+      
     console.log(window.oscData)
     drawItem = (positionArray) -> 
       xposition = positionArray['value'][0]*2
       yposition = (-positionArray['value'][1]+300)*2
       ctx.save()
-      ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
+      #ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
+      ctx.fillStyle = "hsl(#{h1}, 50%, 80%)"
       ctx.fillRect(xposition, yposition, 50, 50)
     
     drawItem(item) for item in window.oscData
-    red = (red + 1) % 256
-    green = (green + 2) % 256
-    blue = (blue + 3) % 256
-        
+
+    h1 = h1 + dir
+    h2 = h2 - dir
+
+    if (h1 > 284 || h1 < 1) then dir = -1 * dir
+
     return  
 
 module.exports = Viz
