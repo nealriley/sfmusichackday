@@ -2,7 +2,7 @@ var WebSocketClient = require('websocket').client;
 var client          = new WebSocketClient();
 var osc             = require('osc-min');
 var dgram           = require('dgram');
-
+var translator      = require('./src/translator');
 var udp = dgram.createSocket("udp4");
 
 var outport = process.env.OUTPORT || 8000;
@@ -21,15 +21,13 @@ client.on('connect', function(connection) {
   });
   connection.on('message', function(message) {
     if (message.type === 'utf8') {
-      var json = JSON.parse(message.utf8Data);
-      // console.dir(json);
+      var json     = JSON.parse(message.utf8Data);
+      var messages = translator(json);
+      var msg      = null;
 
-      if (json["hands"]) {
-        var arg  = "Hello?";
-        var hand = null;
-        if (hand = json.hands[0]) {
-          sendOSCMessage("/hand/" + hand["id"], arg); 
-        }
+      while (messages.length > 0) {
+        msg = messages.pop();
+        sendOSCMessage(msg.address, msg.value);
       }
     }
   });
