@@ -1,4 +1,5 @@
 translator = require "./translator"
+Finger     = require "./finger"
 
 ##
 # Set-up polyfills for unevenly supported features
@@ -47,15 +48,21 @@ ctx = canvas.getContext("2d")
 ctx.canvas.width  = window.innerWidth
 ctx.canvas.height = window.innerHeight
 
+width  = window.innerWidth
+height = window.innerHeight
+
 window.onResize = ->
-  ctx.canvas.width  = window.innerWidth
-  ctx.canvas.height = window.innerHeight
+  width  = ctx.canvas.width  = window.innerWidth
+  height = ctx.canvas.height = window.innerHeight
 
 h1 = 1
 h2 = 285
 dir = 1
 
 class Viz
+  constructor: ->
+    @finger = new Finger(ctx, 0)
+    
   run: (time = perf.now()) =>
     @frameId = root.requestAnimationFrame(@run)
 
@@ -63,8 +70,9 @@ class Viz
       window.oscData = translator(JSON.parse(window.data))
     catch e
       return
-      
-    console.log(window.oscData)
+
+    #@finger.draw(ctx, thing) if thing = window.oscData[0]
+
     drawItem = (positionArray) -> 
       xposition = positionArray['value'][0]*2
       yposition = (-positionArray['value'][1]+300)*2
@@ -73,8 +81,9 @@ class Viz
       ctx.fillStyle = "hsl(#{h1}, 50%, 80%)"
       ctx.fillRect(xposition, yposition, 50, 50)
     
-    drawItem(item) for item in window.oscData
-
+    #drawItem(item) for item in window.oscData
+    @finger.draw(ctx, item) for item in window.oscData
+    
     h1 = h1 + dir
     h2 = h2 - dir
 
