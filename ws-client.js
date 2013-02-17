@@ -34,9 +34,11 @@ client.on('connect', function(connection) {
 });
 
 var sendOSCMessage = function (address, arg) {
+  console.dir(address);
+  console.dir(arg);
   var buf = osc.toBuffer({
     address: address,
-    args: [arg]
+    args: arg
   });
 
   udp.send(buf, 0, buf.length, outport, "localhost");

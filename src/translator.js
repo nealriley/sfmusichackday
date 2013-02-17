@@ -10,9 +10,9 @@ function handMessages(json) {
   if (handOn && newHandOn) {
     messages.push({address: "/hand/val", value: json.hands[0]['palmPosition']});
   } else if (handOn) {
-    messages.push({address: "/hand/on", value: 0});
+    messages.push({address: "/hand/on", value: [0]});
   } else if (newHandOn) {
-    messages.push({address: "/hand/on", value: 1});
+    messages.push({address: "/hand/on", value: [1]});
     messages.push({address: "/hand/val", value: json.hands[0]['palmPosition']});
   }
   handOn = newHandOn;
@@ -35,9 +35,9 @@ function pointableMessages(json) {
     if (pointableOn[i] && newPointableOn[i]) {
       messages.push({address: "/pointable/" + i + "/val", value: pointables[i]});
     } else if (pointableOn[i]) {
-      messages.push({address: "/pointable/" + i + "/on", value: 0});
+      messages.push({address: "/pointable/" + i + "/on", value: [0]});
     } else if (newPointableOn[i]) {
-      messages.push({address: "/pointable/" + i + "/on", value: 1});
+      messages.push({address: "/pointable/" + i + "/on", value: [1]});
       messages.push({address: "/pointable/" + i + "/val", value: pointables[i]});
     }
   }
