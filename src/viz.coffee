@@ -1,3 +1,5 @@
+translator = require "./translator"
+
 ##
 # Set-up polyfills for unevenly supported features
 
@@ -54,7 +56,8 @@ class Viz
     ctx.save();
     ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
     ctx.fillRect(20, 20, 20, 20)
-
+    
+    window.oscData = translator(JSON.parse(window.data))
     red = (red + 1) % 256
     green = (green + 1) % 256
     blue = (blue + 1) % 256

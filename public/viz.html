@@ -23,6 +23,7 @@
   $(document).ready(function () {
     var leapSock = require('leapWS');
     var viz      = new (require('viz'))();
+    leapSock.start();
     viz.run();
   });
   </script>
