@@ -8,12 +8,12 @@ function handMessages(json) {
   }
   newHandOn = json.hands.length > 0;
   if (handOn && newHandOn) {
-    messages.push({address: "/hand/val", value: json.hands[0]['tipPosition']});
+    messages.push({address: "/hand/val", value: json.hands[0]['palmPosition']});
   } else if (handOn) {
     messages.push({address: "/hand/on", value: 0});
   } else if (newHandOn) {
     messages.push({address: "/hand/on", value: 1});
-    messages.push({address: "/hand/val", value: json.hands[0]['tipPosition']});
+    messages.push({address: "/hand/val", value: json.hands[0]['palmPosition']});
   }
   handOn = newHandOn;
   return messages;
