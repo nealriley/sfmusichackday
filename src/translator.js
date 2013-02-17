@@ -1,8 +1,27 @@
 var pointableOn = [];
+var handOn = false;
 
-module.exports = function (json) {
+function handMessages(json) {
   var messages = [];
-  if (!json.hands) {
+  if (!json.hasOwnProperty('hands')) {
+    return messages;
+  }
+  newHandOn = json.hands.length > 0;
+  if (handOn && newHandOn) {
+    messages.push({address: "/hand/val", value: json.hands[0]['tipPosition']});
+  } else if (handOn) {
+    messages.push({address: "/hand/on", value: 0});
+  } else if (newHandOn) {
+    messages.push({address: "/hand/on", value: 1});
+    messages.push({address: "/hand/val", value: json.hands[0]['tipPosition']});
+  }
+  handOn = newHandOn;
+  return messages;
+}
+
+function pointableMessages(json) {
+  var messages = [];
+  if (!json.hasOwnProperty('hands')) {
     return messages;
   }
   newPointableOn = [];
@@ -25,3 +44,5 @@ module.exports = function (json) {
   pointableOn = newPointableOn;
   return messages;
 };
+
+module.exports = handMessages;
