@@ -22,8 +22,8 @@
   <script>
   $(document).ready(function () {
     var leapSock = require('leapWS');
-    var viz      = require('viz'); 
-    leapSock.start();
+    var viz      = new (require('viz'))();
+    viz.run();
   });
   </script>
   </body>
