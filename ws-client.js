@@ -5,7 +5,7 @@ var dgram           = require('dgram');
 var translator      = require('./src/translator');
 var udp = dgram.createSocket("udp4");
 
-var outport = process.env.OUTPORT || 8000;
+var outport = process.env.OUTPORT || 8800;
 
 client.on('connectFailed', function(error) {
   console.log('Connect Error: ' + error.toString());
@@ -34,8 +34,6 @@ client.on('connect', function(connection) {
 });
 
 var sendOSCMessage = function (address, arg) {
-  console.dir(address);
-  console.dir(arg);
   var buf = osc.toBuffer({
     address: address,
     args: arg
