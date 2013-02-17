@@ -13,8 +13,8 @@ module.exports = {
     
     // On successful connection
     ws.onopen = function(event) {
-      document.getElementById("main").style.visibility = "visible";
-      document.getElementById("connection").innerHTML = "WebSocket connection open!";
+      //document.getElementById("main").style.visibility = "visible";
+      //document.getElementById("connection").innerHTML = "WebSocket connection open!";
     };
     
     // On message received
@@ -22,14 +22,14 @@ module.exports = {
       var obj = JSON.parse(event.data);
       var str = JSON.stringify(obj, undefined, 2);
       window.data = str;
-      document.getElementById("output").innerHTML = '<pre>' + str + '</pre>';
+      //document.getElementById("output").innerHTML = '<pre>' + str + '</pre>';
     };
     
     // On socket close
     ws.onclose = function(event) {
       ws = null;
-      document.getElementById("main").style.visibility = "hidden";
-      document.getElementById("connection").innerHTML = "WebSocket connection closed";
+      //document.getElementById("main").style.visibility = "hidden";
+      //document.getElementById("connection").innerHTML = "WebSocket connection closed";
     }
     
     //On socket error
