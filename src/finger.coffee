@@ -15,7 +15,7 @@ class Finger
     color = "rgba(#{r}, #{g}, #{b}, 0.5)"
 
     ctx.globalCompositeOperation = "source-over"
-    ctx.fillStyle = "rgba(0,0,0,0.3)"
+    ctx.fillStyle = "rgba(0,0,0,0.1)"
     ctx.fillRect(0, 0, width, height)
 
     ctx.globalCompositeOperation = "lighter"

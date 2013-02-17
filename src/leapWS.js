@@ -9,7 +9,7 @@ module.exports = {
       WebSocket = MozWebSocket;
     }
     //Create and open the socket
-    ws = new WebSocket("ws://localhost:6437/");
+    ws = new WebSocket("ws://Seth-Tsuis-MacBook-Pro-15.local:6437/");
     
     // On successful connection
     ws.onopen = function(event) {
