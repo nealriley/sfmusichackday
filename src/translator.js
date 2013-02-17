@@ -26,7 +26,7 @@ function onHandChange(idx, hand) {
   return [{address: "/hand/" + idx + "/val", value: hand['palmPosition']},
           {address: "/hand/" + idx + "/vel", value: hand['palmVelocity']},
           {address: "/hand/" + idx + "/direction", value: hand['direction']},
-          {address: "/hand/" + idx + "/radius", value: hand['sphereRadius']}
+          {address: "/hand/" + idx + "/radius", value: [hand['sphereRadius']]}
           ];
 }
 
@@ -40,7 +40,7 @@ function handMessages(json) {
   for (i in json.hands) {
     h = json.hands[i];
     newHandOn[h.id] = true;
-    hands[h['id']] = h;
+    hands[h.id] = h;
   }
   for (var i = 0; i < Math.max(handOn.length, newHandOn.length); i++) {
     if (handOn[i] && newHandOn[i]) {
@@ -100,7 +100,7 @@ function fingerMessages(json) {
   for (i in json.pointables) {
     f = json.pointables[i];
     newFingerOn[f.id] = true;
-    fingers[f['id']] = f;
+    fingers[f.id] = f;
   }
   for (var i = 0; i < Math.max(fingerOn.length, newFingerOn.length); i++) {
     if (fingerOn[i] && newFingerOn[i]) {
