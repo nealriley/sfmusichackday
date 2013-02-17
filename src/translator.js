@@ -1,4 +1,3 @@
-var pointableOn = [];
 var handOn = false;
 
 function handMessages(json) {
@@ -19,6 +18,20 @@ function handMessages(json) {
   return messages;
 }
 
+
+var idxPoolSize = 8;
+var pointableOn = [];
+var idxPool = defaultPool();
+var pToIdx = [];
+
+function defaultPool() {
+  var pool = [];
+  for (var i = idxPoolSize-1; i >= 0; i--) {
+    pool.push(i);
+  }
+  return pool;
+}
+
 function pointableMessages(json) {
   var messages = [];
   if (!json.hasOwnProperty('hands')) {
@@ -33,16 +46,27 @@ function pointableMessages(json) {
   }
   for (var i = 0; i < Math.max(pointableOn.length, newPointableOn.length); i++) {
     if (pointableOn[i] && newPointableOn[i]) {
-      messages.push({address: "/pointable/" + i + "/val", value: pointables[i]});
+      var idx = pToIdx[i];
+      messages.push({address: "/pointable/" + idx + "/val", value: pointables[i]});
     } else if (pointableOn[i]) {
-      messages.push({address: "/pointable/" + i + "/on", value: [0]});
+      var idx = pToIdx[i];
+      messages.push({address: "/pointable/" + idx + "/on", value: [0]});
+      pToIdx[i] = undefined;
+      idxPool.push(idx);
+
+      // reset pool when no pointables are on
+      if (idxPool.length === idxPoolSize) {
+        idxPool = defaultPool();
+      }
     } else if (newPointableOn[i]) {
-      messages.push({address: "/pointable/" + i + "/on", value: [1]});
-      messages.push({address: "/pointable/" + i + "/val", value: pointables[i]});
+      var idx = idxPool.pop();
+      pToIdx[i] = idx;
+      messages.push({address: "/pointable/" + idx + "/on", value: [1]});
+      messages.push({address: "/pointable/" + idx + "/val", value: pointables[i]});
     }
   }
   pointableOn = newPointableOn;
   return messages;
 };
 
-module.exports = handMessages;
+module.exports = pointableMessages;
