@@ -62,7 +62,7 @@ dir = 1
 class Viz
   constructor: ->
     @finger = new Finger(ctx, 0)
-    
+
   run: (time = perf.now()) =>
     @frameId = root.requestAnimationFrame(@run)
 
@@ -80,10 +80,10 @@ class Viz
       #ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
       ctx.fillStyle = "hsl(#{h1}, 50%, 80%)"
       ctx.fillRect(xposition, yposition, 50, 50)
-    
+
     #drawItem(item) for item in window.oscData
     @finger.draw(ctx, item) for item in window.oscData
-    
+
     h1 = h1 + dir
     h2 = h2 - dir
 
