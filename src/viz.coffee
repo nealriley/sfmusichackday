@@ -53,14 +53,19 @@ class Viz
   run: (time = perf.now()) =>
     @frameId = root.requestAnimationFrame(@run)
 
-    ctx.save();
-    ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
-    ctx.fillRect(20, 20, 20, 20)
-    
     window.oscData = translator(JSON.parse(window.data))
+    console.log(window.oscData)
+    drawItem = (positionArray) -> 
+      xposition = positionArray['value'][0]*2
+      yposition = (-positionArray['value'][1]+300)*2
+      ctx.save()
+      ctx.fillStyle = "rgb(#{red}, #{green}, #{blue})"
+      ctx.fillRect(xposition, yposition, 50, 50)
+    
+    drawItem(item) for item in window.oscData
     red = (red + 1) % 256
-    green = (green + 1) % 256
-    blue = (blue + 1) % 256
+    green = (green + 2) % 256
+    blue = (blue + 3) % 256
         
     return  
 
