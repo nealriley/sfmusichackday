@@ -70,10 +70,16 @@ class Viz
     fingers = @filterFingers(oscData)
     @finger.draw(ctx, finger) for finger in fingers
 
+    hands  = @filterHand(oscData)
+    @finger.draw(ctx, hand, 80) for hand in hands
+
     return  
 
   filterFingers: (results) ->
     i for i in results when i['address'].match(/finger/i) and i['address'].match(/val/i)
+
+  filterHand: (results) ->
+    i for i in results when i['address'].match(/hand/i) and i['address'].match(/val/i)
 
 module.exports = Viz
 
