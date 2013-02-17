@@ -4,10 +4,10 @@ class Finger
     width = window.innerWidth
     height = window.innerHeight
 
-    x = Math.abs(data['value'][0]  + 500) << 0
-    y = Math.abs(-data['value'][1] + 500) << 0
+    x = Math.abs((data['value'][0]+1000)/2000 * width  ) << 0
+    y = Math.abs((-data['value'][1]+1000)/2000 * height ) << 0
     radius = 30
-    
+
     r = (Math.random() * 255) << 0 
     g = (Math.random() * 255) << 0
     b = (Math.random() * 255) << 0
