@@ -67,13 +67,13 @@ class Viz
     catch e
       return
 
-    items = @filter(oscData)
-    @finger.draw(ctx, item) for item in items
+    fingers = @filterFingers(oscData)
+    @finger.draw(ctx, finger) for finger in fingers
 
     return  
 
-  filter: (results) ->
-    item for item in results when item['address'].match(/finger/i) and item['address'].match(/val/i)
+  filterFingers: (results) ->
+    i for i in results when i['address'].match(/finger/i) and i['address'].match(/val/i)
 
 module.exports = Viz
 
